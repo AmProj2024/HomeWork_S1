@@ -1,0 +1,21 @@
+{
+"data":[
+
+{
+
+    "UName" : "Admin",
+    "FName" : "Ameen Ismail",
+    "pwd" : 123
+},
+{
+
+    "UName" : "Admin1",
+    "FName" : "Ameen Ismail1",
+    "pwd" : 1234
+}
+
+]
+
+
+
+}

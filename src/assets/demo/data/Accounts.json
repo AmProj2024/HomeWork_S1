@@ -1,0 +1,25 @@
+{
+	"data": [
+		{
+            "id": 1001,
+            "code": "123456",
+            "name": "AssetAccount",
+            "accountstatus":"Document"
+		},
+		{
+            "id": 1002,
+            "code": "654321",
+            "name": "ExpensesAccount",
+            "accountstatus":"Deported"
+
+		},
+        {
+            "id": 1003,
+            "code": "987654",
+            "name": "ThirdAccount",
+            "accountstatus":"Rejected"
+
+		}
+    ]
+    
+}
