@@ -1,0 +1,214 @@
+<p>projects works!</p>
+<p>Ameen</p>
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+                            (click)="FunctionAdd()"></button>
+                        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"
+                            (click)="deleteSelectedproject()"
+                            [disabled]="!selectedAllproject || !selectedAllprojects.length"></button>
+
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"
+                        (click)="dt.exportCSV()"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="Allprojectlist" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['id','accountid','amount','transactiontype']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">projects</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                 <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <!-- <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th> -->
+                        <th pSortableColumn="name">name<p-sortIcon field="name"></p-sortIcon></th>
+                        <th pSortableColumn="Title">Title<p-sortIcon field="Title"></p-sortIcon></th>
+                        <th pSortableColumn="Description">Description<p-sortIcon field="Description"></p-sortIcon></th>
+                        <th pSortableColumn="StartAt">StartAt<p-sortIcon field="StartAt"></p-sortIcon></th>
+                        <th pSortableColumn="EndAt">EndAt<p-sortIcon field="EndAt"></p-sortIcon></th>
+                        <th pSortableColumn="Cost">Cost<p-sortIcon field="Cost"></p-sortIcon></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-Allprojectlist>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="Allprojectlist"></p-tableCheckbox>
+                        </td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>
+                            {{Allprojectlist.id}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;" >
+                            <span class="p-column-title" >Name</span>
+                            {{Allprojectlist.name }}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Title</span>
+                            {{Allprojectlist.amount}}
+                        </td>
+
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Description</span>
+                            {{Allprojectlist.amount}}
+                        </td>
+
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">StartAt</span>
+                            {{Allprojectlist.amount}}
+                        </td>
+
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">EndAt</span>
+                            {{Allprojectlist.amount}}
+                        </td>
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Cost</span>
+                            {{Allprojectlist.amount}}
+                        </td>
+<!-- 
+                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Allprojectlist</span>
+                            <span [class]="'Account-badge status-' + (Allprojectlist.transactiontype ? Transaction.transactiontype.toString().toLowerCase()  : '')">{{Transaction.transactiontype }}</span>
+
+                        </td> -->
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="FunctionEdit(Allprojectlist)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="FunctionDelete(Allprojectlist)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+             <p-dialog [(visible)]="AllprojectDailog" [style]="{width: '450px'}" header="Product Details" [modal]="true" class="p-fluid">
+                <ng-template pTemplate="content">
+                    <div class="field">
+                        <label for="id">ID</label>
+                        <!-- <input type="text" pInputText id="id" [(ngModel)]="project.id" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !Transaction.id}" disabled="true"/> -->
+                        <!-- <small class="ng-dirty ng-invalid" *ngIf="submitted && !Transaction.id">Name is required.</small> -->
+                    </div>
+                    <div class="field">
+                        <label for="AccountId">AccountId</label>
+                        <!-- <p-dropdown [(ngModel)]="Transaction.accountid" inputId="AccountId"  optionValue="id" [options]="BankAccount" placeholder="Select"
+                         dataKey="id"
+                        
+                        >
+                            <ng-template let-option pTemplate= "selectedItem" >
+                                 <span >{{  Transaction.accountid }}</span> 
+                            </ng-template>
+                            <ng-template let-option pTemplate="item" >
+                                <span option.id >{{option.id+' '+option.name}}</span>
+                            </ng-template>
+                        </p-dropdown> -->
+                    </div>
+                    <div class="field">
+                        <label for="id">Amount</label>
+                        <!-- <input type="text" pInputText id="amount" [(ngModel)]="Transaction.amount" equired autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !Transaction.amount}"/> -->
+                        <!-- <small class="ng-dirty ng-invalid" *ngIf="submitted && !Transaction.amount">Amount is required.</small> -->
+                    </div>
+
+                    <div class="field">
+                        <!-- <label for="status"> Transaction Type</label>
+                        <p-dropdown [(ngModel)]="Transaction.transactiontype" inputId="transactiontype" optionValue="label" [options]="transactiontypes" placeholder="Select">
+                            <ng-template pTemplate= "selectedItem">
+                                <span *ngIf="Transaction && Transaction.transactiontype"  [class]="'product-badge status-' + Transaction.transactiontype.toString().toLowerCase()">{{Transaction.transactiontype}}</span>
+                            </ng-template>
+                            <ng-template let-option pTemplate="item">
+                                <span [class]="'product-badge status-' + option.value">{{option.label}}</span>
+                            </ng-template>
+                        </p-dropdown> -->
+                    </div>
+    
+  
+    
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <label for="price">Price</label>
+                            <p-inputNumber id="id" [(ngModel)]="project.id"  locale="en-US"></p-inputNumber>
+                        </div>
+
+                        <div class="field col">
+                            <label for="price">name</label>
+                            <p-inputNumber id="name" [(ngModel)]="project.name"  locale="en-US"></p-inputNumber>
+                        </div>
+
+
+                        <div class="field col">
+                            <label for="price">Description</label>
+                            <p-inputNumber id="Description" [(ngModel)]="project.Description"  locale="en-US"></p-inputNumber>
+                        </div>
+
+
+                        <div class="field col">
+                            <label for="price">StartAt</label>
+                            <p-inputNumber id="StartAt" [(ngModel)]="project.StartAt" locale="en-US"></p-inputNumber>
+                        </div>
+
+
+                        <div class="field col">
+                            <label for="price">StartAt</label>
+                            <p-inputNumber id="EndAt" [(ngModel)]="project.EndAt" locale="en-US"></p-inputNumber>
+                        </div>
+
+
+                        <div class="field col">
+                            <label for="quantity">cost</label>
+                            <p-inputNumber id="cost" [(ngModel)]="project.cost"></p-inputNumber>
+                        </div>
+                    </div> 
+                </ng-template>
+                
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProject()"></button> 
+                </ng-template>
+            </p-dialog>
+       
+
+
+            <p-dialog [(visible)]="deleteprojectDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                    <span *ngIf="project">Are you sure you want to delete transaction <b>{{project.id}}</b>?</span>
+                </div>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteprojectDialog = false"></button>
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+                </ng-template>
+            </p-dialog>
+    
+            <p-dialog [(visible)]="deleteprojectDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                    <span>Are you sure you want to delete selected products?</span>
+                </div>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteprojectDialog = false"></button>
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+                </ng-template>
+            </p-dialog>
+
+        </div>
+    </div>

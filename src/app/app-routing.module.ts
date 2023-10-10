@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppLayoutComponent } from './layout/app.layout.component';
 
+
 const routes: Routes = [];
 
 @NgModule({
@@ -24,12 +25,16 @@ const routes: Routes = [];
            { path: 'Bank', loadChildren: () => import('./MyComponent/Bank/bank.module').then(m => m.bankmodule) },
            { path: 'transaction', loadChildren: () => import('./MyComp/transaction/transaction.module').then(m => m.TransactionModule) },
            { path: 'User', loadChildren: () => import('./Secur/Users/user/user-module').then(m => m.usermodule) },
+           { path: 'projecttype', loadChildren: () => import('./MyComponent/project-type/project-type-module').then(m => m.projecttypeModule) },
+           { path: 'AllProjectlist', loadChildren: () => import('./MyComponent/AllProjectlist/Allprojectlist.module').then(m => m.AllProjectlistModule) },
+           { path: 'projectlist', loadChildren: () => import('./MyComponent/projectlist/projectlist.module').then(m => m.ProjectlistModule) },
+           
            
            { path: '**', redirectTo: '/notfound' },
           // { path: 'notfound', component: NotfoundComponent },
       ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {
 }

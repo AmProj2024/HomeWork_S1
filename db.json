@@ -1,0 +1,110 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "User": [
+    {
+      "id": "1",
+      "FullName": "Amen",
+      "Email1": "Osa@ism.com",
+      "password": "J1234560"
+    },
+    {
+      "id": "2",
+      "FullName": "Amin",
+      "Email1": "amin@ism.com",
+      "password": "J1234560"
+    },
+    {
+      "id": "2",
+      "FullName": "Amin",
+      "Email1": "amin@ism.com",
+      "password": "J1234560"
+    },
+    {
+      "FullName": "s",
+      "Email1": "admin",
+      "password": "Admin",
+      "id": "lldTjhf"
+    },
+    {
+      "username": "Admin",
+      "password": "123",
+      "name": "Ameen",
+      "email": "Ameen@gmail.com",
+      "phone": "776101910",
+      "gender": "male",
+      "role": "user",
+      "status": true,
+      "id": "Ns2VuRn"
+    },
+    {
+      "username": "Ameen",
+      "password": "123",
+      "name": "Amen",
+      "email": "Amen@gmail.com",
+      "phone": "776101910",
+      "gender": "male",
+      "role": "user",
+      "status": true,
+      "id": "tWTDHdF"
+    },
+    {
+      "username": "ameen",
+      "password": "123",
+      "name": "amen",
+      "email": "iasad2022@gmail.com",
+      "phone": "111",
+      "gender": "male",
+      "role": "user",
+      "status": true,
+      "id": "VkENEAl"
+    }
+  ],
+  "ProjectType": [
+    {
+      "id": 10,
+      "name": "Project",
+      "Description": "Speciel"
+    },
+    {
+      "id": 11,
+      "name": "p1",
+      "Description": "public"
+    }
+  ],
+  "Allproject": [
+    {
+      "id": "1",
+      "name": "NAMEProject",
+      "Description": "DescriptionProject",
+      "EndAt": "",
+      "StartAt": "",
+      "Title": "",
+      "cost": 4000
+    },
+    {
+      "id": "1",
+      "name": "AmenProject",
+      "Description": "DescriptionProject",
+      "EndAt": "",
+      "StartAt": "",
+      "Title": "",
+      "cost": 4000
+    }
+  ]
+}

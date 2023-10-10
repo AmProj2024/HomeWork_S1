@@ -18,7 +18,7 @@
 
 
                     <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
-                    <input id="email1" required [(ngModel)]="UName" type="email" placeholder=" Email address" pInputText
+                    <input [id]="email1" required [(ngModel)]="email1" type="email" placeholder=" Email address" pInputText
                         class="w-full md:w-30rem mb-5" style="padding:1rem">
                         <!-- <small [id]="usernamehelp" class="p-error"  >Enter your username to reset your password.</small> -->
                     <div>
@@ -43,7 +43,7 @@
                         <a class="font-medium no-underline ml-2 text-right cursor-pointer"
                             style="color: var(--primary-color)">Forgot password?</a>
                     </div> -->
-                    <button pButton pRipple label="Sign Up" class="w-full p-3 text-xl">
+                    <button pButton pRipple label="Sign Up" class="w-full p-3 text-xl" (click)="SignUp()">
 
                     </button>
                     <p class="" ></p>

@@ -4,6 +4,8 @@ import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router';
 import { MessageService, SelectItem, MenuItem } from 'primeng/api';
 import { Password } from 'primeng/password';
+import { userservice } from 'src/app/demo/service/user.service';
+import { user } from 'src/app/demo/api/User';
 
 
 
@@ -25,18 +27,28 @@ export class SignupComponent {
   SuringRegisterDialog: boolean = false;
 
   UName: string = "";
+
+  email1: string = "";
+
+
+  
   //FName : string = "";
-  pwd?: Password;
-  pwd1?: Password;
+  pwd: string="";
+  pwd1: string="";
   usernamehelp: string = "usernamehelp";
+  //CurrenUser? :any[];
+  Current?:user;
+  m?:string="";
 
 
 
   private _FName: string = "";
-  public get FName(): string {
+  public get FName(): string 
+  {
     return this._FName;
   }
-  public set FName(v: string) {
+  public set FName(v: string) 
+  {
     this._FName = v;
    // this.CheckvisibiltyErrors();
   }
@@ -46,51 +58,42 @@ export class SignupComponent {
 
 
 
-  constructor(private messageService: MessageService) {
+  constructor(private messageService: MessageService,private userservice : userservice) 
+  {
 
-    // this.statusOptions = [
-    //   {label: 'New', value: 'New'},
-    //   {label: 'Under Investigation', value: 'Under Investigation'},
-    //   {label: 'Pending on 3rd party', value: 'Pending on 3rd party'},
-    //   {label: 'Pending on budget', value: 'Pending on budget'},
-    //   {label: 'Fix Ready', value: 'Fix Ready'},
-    //   {label: 'Closed', value: 'Closed'},
-    //   {label: 'Canceled', value: 'Canceled'}
-    // ];
-    // this.serviceLineOptions = [
-    //   {label: 'NOD', value: 'NOD'},
-    //   {label: 'ADI/MIS', value: 'ADI/MIS'},
-    //   {label: 'COLLABORATE/HCMS', value: 'COLLABORATE/HCMS'},
-    //   {label: 'AVPN', value: 'AVPN'},
-    //   {label: 'ANIRA', value: 'ANIRA'},
-    // ];
-    // const flattenRowDate: any[] = this.rowData.map(row => {
-    //   Object.keys(row).map(key => {
-    //     if (key.endsWith('date') && row[key]) {
-    //       row[key] = row[key].$date;
-    //     }
-    //   });
-    //   return row;
-    // });
+
   }
 
 
 
-  SuringRegister() {
+  SuringRegister() 
+  {
     this.SuringRegisterDialog = true;
     // this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-
+    
   }
 
-  SignUp() {
+  users: user[]=[];
+
+
+  SignUp()
+   {
    // if (!this.CheckvisibiltyErrors())
-
       //element.visible = false;
-      return;
+      this.Current = { FullName : this.FName, Email1:this.email1,password : this.pwd };
 
 
-  }
+    //  this.userservice.createUser(this.Current ).subscribe(users => {
+    //   this.users = users;
+    // });
 
+
+    this.userservice.createUser(this.Current).subscribe(
+      ()=>{this.FName,this.email1,this.pwd},
+    )
+
+
+    alert(this.Current);
   // CheckvisibiltyErrors(): boolean {
   //   if (this.pwd != this.pwd1 || this.pwd == null || this.FName.trim() == "" || this.UName.trim() == "")
   //     return false;
@@ -98,7 +101,4 @@ export class SignupComponent {
 
 
 }
-
-/*
-
-*/
+}

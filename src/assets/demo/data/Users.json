@@ -1,11 +1,10 @@
 {
-	"data": [
-		{
-            "id": 1001,
-            "name": "Admin",
-            "password":"Admin"
-		}
-		
-    ]
-    
+      "data": [
+            {
+                  "id": 1001,
+                  "FullName": "Admin",
+                  "Email1": "Email1",
+                  "password": "Admin"
+            }
+      ]
 }

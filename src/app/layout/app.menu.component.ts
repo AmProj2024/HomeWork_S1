@@ -81,6 +81,25 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-lock',
                         routerLink: ['./User']
                     },
+                    {
+                        label: 'projecttype',
+                        icon: 'pi pi-fw pi-lock',
+                        routerLink: ['./projecttype']
+                    },
+                    {
+                        label: 'AllProjectlist',
+                        icon: 'pi pi-fw pi-lock',
+                        routerLink: ['./AllProjectlist']
+                    },
+                    {
+                        label: 'Projectlist',
+                        icon: 'pi pi-fw pi-lock',
+                        routerLink: ['./projectlist']
+                    },
+
+
+
+                    
                     ,
                     // {
                     //     label: 'Access Denied',
