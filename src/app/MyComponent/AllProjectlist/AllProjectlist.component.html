@@ -24,7 +24,8 @@
             </p-toolbar>
 
             <p-table #dt [value]="Allprojectlist" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['id','accountid','amount','transactiontype']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  selectionMode="multiple" [rowHover]="true" dataKey="id">
-                <ng-template pTemplate="caption">
+                <!-- <p-table #dt [value]="Allprojectlist" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,15]"> -->
+                <ng-template   pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                         <h5 class="m-0">projects</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
@@ -102,88 +103,75 @@
                 </ng-template>
             </p-table>
 
-             <p-dialog [(visible)]="AllprojectDailog" [style]="{width: '450px'}" header="Product Details" [modal]="true" class="p-fluid">
+             <p-dialog [(visible)]="AllprojectDailog" [style]="{width: '450px'}" header="Project Details" [modal]="true" class="p-fluid">
+               
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProject()"></button>
+                </ng-template>
                 <ng-template pTemplate="content">
-                    <div class="field">
-                        <label for="id">ID</label>
-                        <!-- <input type="text" pInputText id="id" [(ngModel)]="project.id" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !Transaction.id}" disabled="true"/> -->
-                        <!-- <small class="ng-dirty ng-invalid" *ngIf="submitted && !Transaction.id">Name is required.</small> -->
-                    </div>
-                    <div class="field">
-                        <label for="AccountId">AccountId</label>
-                        <!-- <p-dropdown [(ngModel)]="Transaction.accountid" inputId="AccountId"  optionValue="id" [options]="BankAccount" placeholder="Select"
-                         dataKey="id"
-                        
-                        >
-                            <ng-template let-option pTemplate= "selectedItem" >
-                                 <span >{{  Transaction.accountid }}</span> 
-                            </ng-template>
-                            <ng-template let-option pTemplate="item" >
-                                <span option.id >{{option.id+' '+option.name}}</span>
-                            </ng-template>
-                        </p-dropdown> -->
-                    </div>
-                    <div class="field">
-                        <label for="id">Amount</label>
-                        <!-- <input type="text" pInputText id="amount" [(ngModel)]="Transaction.amount" equired autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !Transaction.amount}"/> -->
-                        <!-- <small class="ng-dirty ng-invalid" *ngIf="submitted && !Transaction.amount">Amount is required.</small> -->
+
+                    <div class="field col">
+                        <label for="name">name</label>
+                        <!-- <p-input id="name" [(ngModel)]="project.name"  locale="en-US"></p-input> -->
+                        <input type="text" pInputText id="name" [(ngModel)]="project.name" equired autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !project.name}"/>
+
                     </div>
 
-                    <div class="field">
-                        <!-- <label for="status"> Transaction Type</label>
-                        <p-dropdown [(ngModel)]="Transaction.transactiontype" inputId="transactiontype" optionValue="label" [options]="transactiontypes" placeholder="Select">
-                            <ng-template pTemplate= "selectedItem">
-                                <span *ngIf="Transaction && Transaction.transactiontype"  [class]="'product-badge status-' + Transaction.transactiontype.toString().toLowerCase()">{{Transaction.transactiontype}}</span>
-                            </ng-template>
-                            <ng-template let-option pTemplate="item">
-                                <span [class]="'product-badge status-' + option.value">{{option.label}}</span>
-                            </ng-template>
-                        </p-dropdown> -->
+                    <div class="field col">
+                        <label for="Title">Title</label>
+                        <!-- <p-input id="name" [(ngModel)]="project.name"  locale="en-US"></p-input> -->
+                        <input type="text" pInputText id="Title" [(ngModel)]="project.Title" equired autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !project.Title}"/>
+
                     </div>
-    
+
+
+                    <div class="field col">
+                        <label for="Description">Description</label>
+                        <p-input id="Description" [(ngModel)]="project.Description"  locale="en-US"></p-input>
+                        <input type="text" pInputText id="Description" [(ngModel)]="project.Description" equired autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !project.Description}"/>
+
+                    </div>
+
+
+                    <div class="field col">
+                        <label for="StartAt">StartAt</label>
+                        <input type="text" pInputText id="StartAt" [(ngModel)]="project.StartAt" equired autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !project.StartAt}"/>
+
+                        <!-- <p-input id="StartAt" [(ngModel)]="project.StartAt" locale="en-US"></p-input> -->
+                    </div>
+
+
+                    <div class="field col">
+                        <label for="EndAt">EndAt</label>
+                        <input type="text" pInputText id="EndAt" [(ngModel)]="project.EndAt" equired autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !project.EndAt}"/>
+
+                    </div>
+
+
+                    <div class="field col">
+                        <label for="cost">cost</label>
+                        <input type="text" pInputText id="cost" [(ngModel)]="project.cost" equired autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !project.cost}"/>
+
+                        <p-input id="cost" [(ngModel)]="project.cost"></p-input>
+                    </div>
   
     
                     <div class="formgrid grid">
-                        <div class="field col">
+                        <!-- <div class="field col">
                             <label for="price">Price</label>
                             <p-inputNumber id="id" [(ngModel)]="project.id"  locale="en-US"></p-inputNumber>
-                        </div>
+                        </div> -->
 
-                        <div class="field col">
-                            <label for="price">name</label>
-                            <p-inputNumber id="name" [(ngModel)]="project.name"  locale="en-US"></p-inputNumber>
-                        </div>
-
-
-                        <div class="field col">
-                            <label for="price">Description</label>
-                            <p-inputNumber id="Description" [(ngModel)]="project.Description"  locale="en-US"></p-inputNumber>
-                        </div>
-
-
-                        <div class="field col">
-                            <label for="price">StartAt</label>
-                            <p-inputNumber id="StartAt" [(ngModel)]="project.StartAt" locale="en-US"></p-inputNumber>
-                        </div>
-
-
-                        <div class="field col">
-                            <label for="price">StartAt</label>
-                            <p-inputNumber id="EndAt" [(ngModel)]="project.EndAt" locale="en-US"></p-inputNumber>
-                        </div>
-
-
-                        <div class="field col">
-                            <label for="quantity">cost</label>
-                            <p-inputNumber id="cost" [(ngModel)]="project.cost"></p-inputNumber>
-                        </div>
+                      
                     </div> 
                 </ng-template>
+
                 
-                <ng-template pTemplate="footer">
-                    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-                    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProject()"></button> 
-                </ng-template>
+                    <!-- <ng-template pTemplate="footer">
+                        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProject()"></button> 
+                </ng-template> -->
             </p-dialog>
        
 

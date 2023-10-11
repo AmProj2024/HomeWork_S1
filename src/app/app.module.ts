@@ -36,6 +36,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MaterialModule } from 'src/Material.Module';
+//import { reducer } from './your-reducer-file';
 
 
 
@@ -65,6 +66,8 @@ import { MaterialModule } from 'src/Material.Module';
      //HttpClient,
      //Observable,
      StoreDevtoolsModule,
+//    StoreModule.forRoot({ Allproject: reducer }),
+
     
   
   ],

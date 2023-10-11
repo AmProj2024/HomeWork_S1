@@ -1,5 +1,5 @@
 export interface Allproject {
-    id: string,
+    id: number,
     name: string
     Description:string,
     EndAt : string,

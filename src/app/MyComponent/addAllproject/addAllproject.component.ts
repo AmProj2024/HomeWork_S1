@@ -41,7 +41,7 @@ export class addAllprojectComponent implements OnInit{
   }
 
   Allprojectform = this.builder.group({
-    id: this.builder.control(""),
+    id: this.builder.control(1),
     name: this.builder.control('', Validators.required),
     StartAt: this.builder.control('', Validators.required),
     Description:this.builder.control('', Validators.required),
@@ -58,7 +58,7 @@ export class addAllprojectComponent implements OnInit{
   SaveTag() {
     if (this.Allprojectform.valid) {
       const _obj: Allproject = {
-        id: this.Allprojectform.value.id as string,
+        id: 1,
         name: this.Allprojectform.value.name as string,
         Description : this.Allprojectform.value.Description as string,
         StartAt : this.Allprojectform.value.StartAt as string,
@@ -67,7 +67,7 @@ export class addAllprojectComponent implements OnInit{
         cost : this.Allprojectform.value.cost as number,
 
       }
-      if (_obj.id == "") {
+      if (_obj.id == 1) {
         this.store.dispatch(addAllproject({ inputdata: _obj }))
       } else {
         this.store.dispatch(updateAllproject({ inputdata: _obj }))
