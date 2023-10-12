@@ -25,7 +25,7 @@ const _AllprojectReducer = createReducer(AllprojectState,
         }
     }),
     on(addAllprojectsuccess, (State, action) => {
-        const _maxid = Math.max(...State.list.map(o => o.id));
+        const _maxid = Math.max(...State.list.map(o => o.id??0));
         const _newdata = { ...action.inputdata };
         _newdata.id = _maxid + 1;
         return {

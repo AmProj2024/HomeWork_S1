@@ -23,7 +23,7 @@
                 </ng-template>
             </p-toolbar>
 
-            <p-table #dt [value]="Allprojectlist" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['id','accountid','amount','transactiontype']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  selectionMode="multiple" [rowHover]="true" dataKey="id">
+            <p-table #dt [value]="Allprojectlist" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['id','accountid','amount','transactiontype']" [(selection)]="project" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  selectionMode="multiple" [rowHover]="true" dataKey="id">
                 <!-- <p-table #dt [value]="Allprojectlist" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,15]"> -->
                 <ng-template   pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
@@ -49,44 +49,44 @@
                         <th></th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-Allprojectlist>
+                <ng-template pTemplate="body" let-CurrentProject>
                     <tr>
                         <td>
                             <p-tableCheckbox [value]="Allprojectlist"></p-tableCheckbox>
                         </td>
-                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>
+                        <!-- <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>
                             {{Allprojectlist.id}}
-                        </td>
+                        </td> -->
                         <td style="width:14%; min-width:10rem;" >
                             <span class="p-column-title" >Name</span>
-                            {{Allprojectlist.name }}
+                            {{CurrentProject.name }}
                         </td>
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">Title</span>
-                            {{Allprojectlist.amount}}
+                            {{CurrentProject.Title}}
                         </td>
 
 
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">Description</span>
-                            {{Allprojectlist.amount}}
+                            {{CurrentProject.Description}}
                         </td>
 
 
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">StartAt</span>
-                            {{Allprojectlist.amount}}
+                            {{CurrentProject.StartAt}}
                         </td>
 
 
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">EndAt</span>
-                            {{Allprojectlist.amount}}
+                            {{CurrentProject.EndAt}}
                         </td>
 
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">Cost</span>
-                            {{Allprojectlist.amount}}
+                            {{CurrentProject.cost  }}
                         </td>
 <!-- 
                         <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Allprojectlist</span>
@@ -95,8 +95,8 @@
                         </td> -->
                         <td>
                             <div class="flex">
-                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="FunctionEdit(Allprojectlist)"></button>
-                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="FunctionDelete(Allprojectlist)"></button>
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="FunctionEdit(CurrentProject)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteSelectedproject()"></button>
                             </div>
                         </td>
                     </tr>
@@ -179,22 +179,22 @@
             <p-dialog [(visible)]="deleteprojectDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
                 <div class="flex align-items-center justify-content-center">
                     <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                    <span *ngIf="project">Are you sure you want to delete transaction <b>{{project.id}}</b>?</span>
+                    <span *ngIf="project">Are you sure you want to delete Projects <b>{{project.id}}</b>?</span>
                 </div>
                 <ng-template pTemplate="footer">
                     <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteprojectDialog = false"></button>
-                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)=" project.id !== undefined && confirmDeleteSelected()"></button>
                 </ng-template>
             </p-dialog>
     
             <p-dialog [(visible)]="deleteprojectDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
                 <div class="flex align-items-center justify-content-center">
                     <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                    <span>Are you sure you want to delete selected products?</span>
+                    <span>Are you sure you want to delete selected projects?</span>
                 </div>
                 <ng-template pTemplate="footer">
                     <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteprojectDialog = false"></button>
-                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="project.id !== undefined && confirmDelete(project.id)"></button>
                 </ng-template>
             </p-dialog>
 

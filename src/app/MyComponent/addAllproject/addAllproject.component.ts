@@ -31,7 +31,7 @@ export class addAllprojectComponent implements OnInit{
     this.basetitle = this.dialogdata.basetitle;
     this.store.select(getAllproject).subscribe(res => {
       this.Allprojectform.setValue({
-        id: res.id, name: res.name,Title:res.Title,Description:res.Description,EndAt:res.EndAt,StartAt:res.StartAt,cost:res.cost??0,
+        id: res.id??0, name: res.name,Title:res.Title,Description:res.Description,EndAt:res.EndAt,StartAt:res.StartAt,cost:res.cost??0,
       })
     })
   }

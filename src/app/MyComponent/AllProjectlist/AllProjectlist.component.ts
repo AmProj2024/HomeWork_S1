@@ -6,12 +6,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { addAllprojectComponent } from '../addAllproject/addAllproject.component';
 import {  Allproject, AllprojectModel } from 'src/app/demo/Store/Allproject.model';
-import { deleteAllproject, getAllproject_Action, loadAllproject, openpopup,addAllproject } from 'src/app/demo/Store/Allproject.Action_';
+import { deleteAllproject, getAllproject_Action, loadAllproject, openpopup,addAllproject, updateAllproject } from 'src/app/demo/Store/Allproject.Action_';
 import { getAllproject, getAllprojectlist } from 'src/app/demo/Store/Allproject.Selectors';
 import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import { DOCUMENT } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable, first } from 'rxjs';
 @Component({
   selector: 'app-allproject-list',
   templateUrl: './AllProjectlist.component.html',
@@ -23,7 +23,7 @@ export class AllProjectListComponent implements OnInit  {
   Allprojectlist: Allproject[]=[];
   //project! : Allproject {};
   project : Allproject ={
-    id: 1,
+    id:1,
     name: '',
     Description: '',
     EndAt: '',
@@ -40,7 +40,7 @@ export class AllProjectListComponent implements OnInit  {
   submitted : boolean = false;
   selectedAllprojects! :Allproject[];
   AllprojectDailog : boolean=false;
-
+  //selectedproject : Allproject={};
 
   displayedColums: string[] = ["code", "name", "action"]
   constructor(private dialog: MatDialog, private store: Store,private messageService:MessageService,@Inject(DOCUMENT) private document: Document) {
@@ -51,16 +51,7 @@ export class AllProjectListComponent implements OnInit  {
 
 
   ngOnInit(): void {
-    // this.store.dispatch(loadAllproject());
-    // this.store.select(getAllprojectlist).subscribe(item => {
-    //   this.Allprojectlist = item;
-    //   this.Allprojectdatasource = new MatTableDataSource<Allproject>(this.Allprojectlist);
-    //   this.Allprojectdatasource.paginator = this.paginator;
-    //   this.Allprojectdatasource.sort = this.sort;
-    // });
-    this.store.pipe(select(getAllprojectlist)).subscribe((allprojectlist: Allproject[]) => {
-      this.Allprojectlist = allprojectlist;
-    });
+
     this.cols = [
       { field: 'id', header: 'id' },
       { field: ' name', header: 'Name' },
@@ -72,33 +63,11 @@ export class AllProjectListComponent implements OnInit  {
   
     ];
 
-    /*
-    
-    export interface Allproject {
-    id: number,
-    name: string
-    Description:string,
-    EndAt : string,
-    StartAt:string,
-    Title:string,
-    cost?:number
-}
-
-export interface AllprojectModel {
-    list: Allproject[],
-    Allprojectobj: Allproject,
-    errormessage: string
-}
-     */
-  
-    // this.transactiontypes = [
-    //   { label: 'deposit', value: 'deposit' },
-    //   { label: 'withdraw', value: 'withdraw' },
-    // ];
-  
-  
-  
-  
+    this.store.dispatch(loadAllproject());
+    this.store.pipe(select(getAllprojectlist)).subscribe((allprojectlist: Allproject[]) => {
+      this.Allprojectlist = allprojectlist;
+      this.Allprojectdatasource = allprojectlist;
+    });
   
   }
 
@@ -106,10 +75,8 @@ export interface AllprojectModel {
 
  
   FunctionAdd() {
-   // this.OpenPopup(0, 'Create Project')
     this.AllprojectDailog=true;
     this.project = {
-      id: 1,
       name: '',
       Description: '',
       EndAt: '',
@@ -123,15 +90,19 @@ export interface AllprojectModel {
 
   }
 
-  FunctionEdit(code: number) {
-    this.OpenPopup(code, 'Update Project');
-    this.store.dispatch(getAllproject_Action({ id: code }))
+  FunctionEdit(project:Allproject) {
+    this.project = { ...project };
+    this.AllprojectDailog = true;
+
+    //this.OpenPopup(code, 'Update Project');
+  //  this.store.dispatch(getAllproject_Action({ id: code }))
   }
 
   FunctionDelete(code: number) {
-    if (confirm('do you want to remove?')) {
+    //if (confirm('do you want to remove?')) {
+     // this.confirmDelete();
       this.store.dispatch(deleteAllproject({ code: code }));
-    }
+    
   }
 
   deleteSelectedproject() {
@@ -159,29 +130,32 @@ export interface AllprojectModel {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
 
-
   saveProject() {
     this.submitted = true;
-
     //if (this.product.name?.trim()) 
     {
       if (this.project.id) {
-        // @ts-ignore
-        //   this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value : this.product.inventoryStatus;
-        
-        // this.Transaction.transactiontype =  this.Transaction.transactiontype ?  this.Transaction.transactiontype :  this.Transaction.transactiontype;
-        // this.Transaction.accountid = this.Transaction.accountid ? this.Transaction.accountid : this.Transaction.accountid;
-        this.project[this.findIndexById(this.project.id)] = this.project;
-        alert(this.project.id + "\n" + this.project.id +"\n"+ this.project.id  );
+   
+        const _obj: Allproject = {
+          id : this.project.id,
+          name:this.project.name ,
+          Title:this.project.Title ,
+          Description:this.project.Description ,
+          StartAt:this.project.StartAt ,
+          EndAt:this.project.EndAt ,
+          cost:this.project.cost ,
 
+        }
 
-
+        alert(_obj.id + _obj.Title);
+        this.store.dispatch(updateAllproject({inputdata :_obj}));
+       
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
       }
       else {
         
         const _obj: Allproject = {
-          id:1,//this.project.id = this.createId(),
+          id:this.createId(),
           name:this.project.name ,
           Title:this.project.Title ,
           Description:this.project.Description ,
@@ -191,28 +165,10 @@ export interface AllprojectModel {
 
         }
         this.store.dispatch(addAllproject({inputdata :_obj}));
-      //  this.store.dispatch(loadAllproject());
-
-        // this.store.select(getAllprojectlist).subscribe(item=>{
-        //   this.Allprojectlist = item;
-        //   this.Allprojectdatasource = new MatTableDataSource<Allproject>(this.Allprojectlist);
-        //   this.Allprojectdatasource.paginator = this.paginator;
-        //   this.Allprojectdatasource.sort = this.sort;
-
-        // });
-
         this.store.dispatch(loadAllproject());
-        this.store.pipe(select(getAllprojectlist)).subscribe((allprojectlist: Allproject[]) => {
-          this.Allprojectlist = allprojectlist;
-        });
 
+this.AllprojectDailog = false;
 
-        
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-     // this.Allprojectdatasource = [...this.Allprojectdatasource];
-     // this.AllprojectDailog = false;
-     // this.project = {};
-    
   }
  }
 };
@@ -221,31 +177,29 @@ export interface AllprojectModel {
     this.AllprojectDailog = false;
     this.submitted = false;
   }
-
-  createId(): string {
-    let id = '';
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < 5; i++) {
-      id += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-
-    return id;
+  createId(): number {
+    const min = 10000; // Minimum value for the random number
+    const max = 99999; // Maximum value for the random number
+  
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-
-
 
   confirmDeleteSelected() {
     this.deleteprojectDialog = false;
-   // this.Allprojectlist = this.Allprojectlist.filter(val => !this.selectedAllprojects.includes(val));
+    this.Allprojectlist = this.Allprojectlist.filter(val => !this.selectedAllprojects.includes(val));
     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Transaction Deleted', life: 3000 });
     this.selectedAllprojects = [];
   }
   
-  confirmDelete() {
-    this.deleteprojectDialog = false;
-   // this.Allprojectlist = this.Allprojectlist.filter(val => val.id !== this.project.id);
+  confirmDelete(code:number) {
+    this.deleteprojectDialog = true;
+   //this.Allprojectlist = this.Allprojectlist.filter(val => val.id !== this.project.id);
+  //const cod = this.project.id;
+  this.store.dispatch(deleteAllproject({code}));
+
     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Transaction Deleted', life: 3000 });
     //this.selectedAllproject = {};
+    this.deleteprojectDialog = false; 
   }
 
 

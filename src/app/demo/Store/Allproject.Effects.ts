@@ -3,18 +3,12 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, exhaustMap, map, of, switchMap } from "rxjs";
 import { addAllproject, addAllprojectsuccess, deleteAllproject, deleteAllprojectsuccess, getAllproject_Action, getAllprojectsuccess, loadAllproject, loadAllprojectfail, loadAllprojectsuccess, updateAllproject, updateAllprojectsuccess } from "./Allproject.Action_";
 import { AllprojectService } from "../service/AllprojectService";
-//import { UserService } from "src/app/service/user.service";
 import { Router } from "@angular/router";
 import { showalert } from "./Common/App.Action";
 
-
 @Injectable()
 export class AllprojectEffects {
-    constructor(private actin$: Actions, private service: AllprojectService) {
-
-    }
-
-
+    constructor(private actin$: Actions, private service: AllprojectService) {}
 
     _loadAllProject = createEffect(() =>
         this.actin$.pipe(
@@ -24,6 +18,7 @@ export class AllprojectEffects {
                     map((data) => {
                         console.log(data);
                         return loadAllprojectsuccess({ list: data })
+
                     }),
                     catchError((_error) => of(loadAllprojectfail({ errormessage: _error.message })))
                 )
@@ -37,6 +32,7 @@ export class AllprojectEffects {
             exhaustMap((action) => {
                 return this.service.Getbycode(action.id).pipe(
                     map((data) => {
+
                         return getAllprojectsuccess({ obj: data })
                     }),
                     catchError((_error) => of(showalert({ message: 'Failed to fetch data :' + _error.message, resulttype: 'fail' })))
@@ -51,6 +47,7 @@ export class AllprojectEffects {
             switchMap((action) => {
                 return this.service.Create(action.inputdata).pipe(
                     switchMap((data) => {
+
                         return of(addAllprojectsuccess({ inputdata: action.inputdata }),
                             showalert({ message: 'Created successfully.', resulttype: 'pass' }))
                     }),
@@ -88,7 +85,6 @@ export class AllprojectEffects {
         )
     )
 }
-
 
 //     _loadAllproject = createEffect(() =>
 //         this.actin$.pipe(

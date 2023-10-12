@@ -26,7 +26,6 @@ export class projecttypeService {
     }
   
     createprojecttype(projecttype: projecttype): Observable<projecttype> {
-        alert(projecttype.name+ ''+projecttype.Description);
         projecttype.id = "55";
         projecttype.Description = "";
 

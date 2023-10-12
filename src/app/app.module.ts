@@ -36,6 +36,8 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MaterialModule } from 'src/Material.Module';
+import { AllprojectReducer } from './demo/Store/Allproject.Reducer_';
+import { AllprojectEffects } from './demo/Store/Allproject.Effects';
 //import { reducer } from './your-reducer-file';
 
 
@@ -66,7 +68,8 @@ import { MaterialModule } from 'src/Material.Module';
      //HttpClient,
      //Observable,
      StoreDevtoolsModule,
-//    StoreModule.forRoot({ Allproject: reducer }),
+     StoreModule.forRoot({ Allproject: AllprojectReducer, }),
+  EffectsModule.forRoot([AllprojectEffects, /*AppEffects*/]),
 
     
   
