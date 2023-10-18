@@ -1,10 +1,12 @@
 export interface Allproject {
     id?: number,
-    name: string
-    Description:string,
-    EndAt : string,
-    StartAt:string,
-    Title:string,
+    name?: string
+    Description?:string,
+    projecttypeId?:number,
+    projecttypeName?:string,
+    EndAt? : string,
+    StartAt?:string,
+    Title?:string,
     cost?:number
 }
 

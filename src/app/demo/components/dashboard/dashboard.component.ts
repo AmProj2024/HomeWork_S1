@@ -4,6 +4,11 @@ import { Product } from '../../api/product';
 import { ProductService } from '../../service/product.service';
 import { Subscription } from 'rxjs';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
+import { Router } from '@angular/router';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { SessionService } from '../../service/session.service';
+import { LocalStorageService } from 'ngx-webstorage';
+
 
 @Component({
     templateUrl: './dashboard.component.html',
@@ -20,10 +25,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     subscription!: Subscription;
 
-    constructor(private productService: ProductService, public layoutService: LayoutService) {
+    constructor(private productService: ProductService, public layoutService: LayoutService,private router: Router,private SessionService:SessionService ) {
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });
+        if(!this.SessionService.getSessionData(SharedModule.CurrentUser.FullName as string))
+        {
+            alert(this.SessionService.getSessionData(SharedModule.CurrentUser.FullName as string));
+          //  this.router.navigate(['/auth/login']);
+          // alert("سيتم تحويلك الى شاشة تسجيل الدخول")
+            // this.router.navigate(['/']);
+
+        }
+
+
     }
 
     ngOnInit() {

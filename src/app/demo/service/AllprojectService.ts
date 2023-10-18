@@ -26,6 +26,12 @@ export class AllprojectService {
   Delete(code: number) {
     return this.http.delete(this.baseurl + '/' + code);
   }
+
+
+   DeleteList(codes:number[]) {
+    return this.http.delete(this.baseurl + '/' + codes);
+  }
+
   Update(data: Allproject) {
     return this.http.put(this.baseurl + '/' + data.id, data);
   }

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core"
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, exhaustMap, map, of, switchMap } from "rxjs";
-import { addAllproject, addAllprojectsuccess, deleteAllproject, deleteAllprojectsuccess, getAllproject_Action, getAllprojectsuccess, loadAllproject, loadAllprojectfail, loadAllprojectsuccess, updateAllproject, updateAllprojectsuccess } from "./Allproject.Action_";
+import { catchError, concatMap, exhaustMap, forkJoin, map, of, switchMap, toArray } from "rxjs";
+import { addAllproject, addAllprojectsuccess, deleteAllproject, deleteAllprojectsuccess, deleteListAllproject, getAllproject_Action, getAllprojectsuccess, loadAllproject, loadAllprojectfail, loadAllprojectsuccess, updateAllproject, updateAllprojectsuccess } from "./Allproject.Action_";
 import { AllprojectService } from "../service/AllprojectService";
 import { Router } from "@angular/router";
 import { showalert } from "./Common/App.Action";
@@ -84,6 +84,35 @@ export class AllprojectEffects {
             })
         )
     )
+
+
+
+
+
+    _deleteListAllproject = createEffect(() =>
+  this.actin$.pipe(
+    ofType(deleteListAllproject),
+    switchMap((action) => {
+      const deleteRequests$ = action.codes.map(codes => this.service.DeleteList([codes]));
+    //  alert(action.codes.length);
+      return forkJoin(deleteRequests$).pipe(
+        toArray(),
+        concatMap((results) => {
+          const successActions = results.map((data, index) =>
+            deleteAllprojectsuccess({ code: action.codes[index] })
+          );
+
+          return of(...successActions, showalert({ message: 'Deleted successfully.', resulttype: 'pass' }));
+        }),
+        catchError((_error) =>
+          of(showalert({ message: 'Failed to delete Allproject', resulttype: 'fail'}))
+          )
+        );
+      })
+    )
+  );
+
+
 }
 
 //     _loadAllproject = createEffect(() =>

@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { LocalStorageService } from 'ngx-webstorage';
 import { MessageService } from 'primeng/api';
 import { user } from 'src/app/demo/api/User';
+import { SessionService } from 'src/app/demo/service/session.service';
 import { userservice } from 'src/app/demo/service/user.service';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @Component({
@@ -17,61 +20,48 @@ import { LayoutService } from 'src/app/layout/service/app.layout.service';
             color: var(--primary-color) !important;
         }
     `],
-  providers: [MessageService,RouterLink]
+    providers: [MessageService, RouterLink]
 
 })
 export class LoginComponent {
 
     valCheck: string[] = ['remember'];
-    users: user[]=[];
+    users: user[] = [];
 
     password!: string;
     username!: string;
-    router!: RouterLink;
+    //router!: RouterLink;
 
-    constructor(public layoutService: LayoutService,public userservice:userservice)
-     {
-      //  localStorage.clear();  
-      //  localStorage.removeItem('isLoggedIn');  
+    constructor(public layoutService: LayoutService, public userservice: userservice, private SessionService: SessionService, private router: Router,private storage: LocalStorageService) {
+        //  localStorage.clear();  
+        //  localStorage.removeItem('isLoggedIn');  
 
-      this.userservice.getUsers().subscribe(users => {
-        this.users = users;
-      });
-      }
+        this.userservice.getUsers().subscribe(users => {
+            this.users = users;
 
-login()
-{
-    var DoneCheckUser = this.userservice.checkUserCredentials(this.username,this.password);
-    
-   // this.userservice.getUserById    
-//alert(this.username+this.password);
-alert(DoneCheckUser);
-if(DoneCheckUser)
-     {
+        });
+    }
 
+    login() {
 
-        alert("noerror")
+     //   this.SessionService.clearSessionData();
+        var ddd = this.userservice.checkUserCredentials(this.username,this.password);
+        alert(" result : " +!!this.userservice.checkUserCredentials(this.username,this.password).subscribe(x=>x));
 
-        //     localStorage.setItem('isLoggedIn', "true"); 
-        //     alert(""); 
-        //      // //  localStorage.setItem('token', this.f.userid.value);
-              this.router.routerLink = "['/']"
-        //      alert(""); 
+        var thisUser = this.users.find(x => x.FullName == this.username && x.password == this.password)
+        if (thisUser) {
+             SharedModule.CurrentUser = thisUser;
+            this.router.navigate(['/']);
+            this.SessionService.setSessionData(this.username, "IsLogin");
+            this.storage.store('username', this.username);
 
 
-
-
-        } 
-        else{
-            this.router.routerLink = "['./auth/login']"
-
-alert("errot")
+        }
+        else
+        {
+            alert(" User Is Not Found  ");
         }
 
-    
- 
-
-    // }
-}
+    }
 
 }

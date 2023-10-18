@@ -8,6 +8,7 @@ import {  Allproject, AllprojectModel } from 'src/app/demo/Store/Allproject.mode
 import { deleteAllproject, getAllproject_Action, loadAllproject, openpopup } from 'src/app/demo/Store/Allproject.Action_';
 import { getAllproject, getAllprojectlist } from 'src/app/demo/Store/Allproject.Selectors';
 import { AllprojectService } from 'src/app/demo/service/AllprojectService';
+import { SharedProjecttypeService } from 'src/app/demo/service/Shared.projecttype.Service';
 
 @Component({
   selector: 'app-projectlist',
@@ -23,9 +24,12 @@ export class ProjectlistComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   displayedColums: string[] = ["code", "name", "action"]
-  constructor(private dialog: MatDialog, private store: Store) {
+  constructor(private dialog: MatDialog, private store: Store,    private sharedService: SharedProjecttypeService    ) {
 
   }
+
+
+
 
   ngOnInit(): void {
     this.store.dispatch(loadAllproject());
@@ -35,6 +39,7 @@ export class ProjectlistComponent implements OnInit {
       this.Allprojectdatasource.paginator = this.paginator;
       this.Allprojectdatasource.sort = this.sort;
     });
+    
   }
 
   FunctionAdd() {

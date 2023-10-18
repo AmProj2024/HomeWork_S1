@@ -4,6 +4,7 @@ import { Table } from 'primeng/table';
 import { account } from 'src/app/demo/api/Account';
 import { projecttype } from 'src/app/demo/api/projecttype';
 import { projecttypeService } from 'src/app/demo/service/Projecttype.Service';
+import { SharedProjecttypeService } from 'src/app/demo/service/Shared.projecttype.Service';
 
 
 @Component({
@@ -31,8 +32,11 @@ export class ProjectTypeComponent implements OnInit {
   projecttypes:projecttype[] = [];
   projecttype:projecttype={};
 
-  constructor(private projecttypeservice: projecttypeService, private messageService: MessageService) { }
-
+  constructor(private projecttypeservice: projecttypeService, private messageService: MessageService,private sharedService: SharedProjecttypeService) { }
+  updateData() {
+    const newData = this.projecttypes; // Get the new data from your component
+    this.sharedService.updateProjectTypeData(newData);
+  }
   ngOnInit() {
 
       this.projecttypeservice.getprojecttype().subscribe(projecttypes => {

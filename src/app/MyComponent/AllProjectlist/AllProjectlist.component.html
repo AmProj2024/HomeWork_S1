@@ -23,7 +23,9 @@
                 </ng-template>
             </p-toolbar>
 
-            <p-table #dt [value]="Allprojectlist" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['id','accountid','amount','transactiontype']" [(selection)]="project" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  selectionMode="multiple" [rowHover]="true" dataKey="id">
+            <p-table #dt [value]="Allprojectlist" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['id','accountid','amount','transactiontype']" [(selection)]="selectedAllprojects"  [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  selectionMode="multiple" [rowHover]="true" dataKey="id">
+      <!-- <p-table #dt [value]="Transactions" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['id','accountid','amount','transactiontype']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedTransaction" selectionMode="multiple" [rowHover]="true" dataKey="id"> -->
+
                 <!-- <p-table #dt [value]="Allprojectlist" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,15]"> -->
                 <ng-template   pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
@@ -46,56 +48,68 @@
                         <th pSortableColumn="StartAt">StartAt<p-sortIcon field="StartAt"></p-sortIcon></th>
                         <th pSortableColumn="EndAt">EndAt<p-sortIcon field="EndAt"></p-sortIcon></th>
                         <th pSortableColumn="Cost">Cost<p-sortIcon field="Cost"></p-sortIcon></th>
+                        <th pSortableColumn="projecttypeName">projecttypeName<p-sortIcon field="projecttypeName"></p-sortIcon></th>
+                        <th pSortableColumn="projecttypeId">projecttypeId<p-sortIcon field="projecttypeId"></p-sortIcon></th>
+                        
+                        
                         <th></th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-CurrentProject>
+                <ng-template pTemplate="body" let-project>
                     <tr>
                         <td>
-                            <p-tableCheckbox [value]="Allprojectlist"></p-tableCheckbox>
+                            <p-tableCheckbox [value]="project"></p-tableCheckbox>
                         </td>
                         <!-- <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>
                             {{Allprojectlist.id}}
                         </td> -->
                         <td style="width:14%; min-width:10rem;" >
                             <span class="p-column-title" >Name</span>
-                            {{CurrentProject.name }}
+                            {{project.name }}
                         </td>
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">Title</span>
-                            {{CurrentProject.Title}}
+                            {{project.Title}}
                         </td>
 
 
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">Description</span>
-                            {{CurrentProject.Description}}
+                            {{project.Description}}
                         </td>
 
 
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">StartAt</span>
-                            {{CurrentProject.StartAt}}
+                            {{project.StartAt}}
                         </td>
 
 
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">EndAt</span>
-                            {{CurrentProject.EndAt}}
+                            {{project.EndAt}}
                         </td>
 
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">Cost</span>
-                            {{CurrentProject.cost  }}
+                            {{project.cost  }}
                         </td>
-<!-- 
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">projecttypeName</span>
+                            {{  project.projecttypeName  }}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">projecttypeId</span>
+                            {{project.projecttypeId  }}
+                        </td>
+                        <!-- 
                         <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Allprojectlist</span>
                             <span [class]="'Account-badge status-' + (Allprojectlist.transactiontype ? Transaction.transactiontype.toString().toLowerCase()  : '')">{{Transaction.transactiontype }}</span>
 
                         </td> -->
                         <td>
                             <div class="flex">
-                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="FunctionEdit(CurrentProject)"></button>
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="FunctionEdit(project)"></button>
                                 <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteSelectedproject()"></button>
                             </div>
                         </td>
@@ -105,10 +119,7 @@
 
              <p-dialog [(visible)]="AllprojectDailog" [style]="{width: '450px'}" header="Project Details" [modal]="true" class="p-fluid">
                
-                <ng-template pTemplate="footer">
-                    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-                    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProject()"></button>
-                </ng-template>
+
                 <ng-template pTemplate="content">
 
                     <div class="field col">
@@ -134,10 +145,25 @@
                     </div>
 
 
+
+                    <div class="field">
+                        <label for="projecttype">projecttype</label>
+                        <!-- <textarea id="AccountId" pInputTextarea [(ngModel)]="Transaction.AccountId" required rows="3" cols="20"></textarea> -->
+                        <p-dropdown [(ngModel)]="project.projecttypeId" inputId="projecttypeId"  optionValue="id" [options]="projectType" placeholder="Select"
+                        >
+                             <ng-template let-option pTemplate= "selectedItem" >
+                                <span >{{  option.name }}</span>
+                            </ng-template>
+                            <ng-template let-option pTemplate="item" >
+                                <span option.id >{{option.id+' '+option.name}}</span>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+
+
                     <div class="field col">
                         <label for="StartAt">StartAt</label>
                         <input type="text" pInputText id="StartAt" [(ngModel)]="project.StartAt" equired autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !project.StartAt}"/>
-
                         <!-- <p-input id="StartAt" [(ngModel)]="project.StartAt" locale="en-US"></p-input> -->
                     </div>
 
@@ -167,23 +193,23 @@
                     </div> 
                 </ng-template>
 
-                
-                    <!-- <ng-template pTemplate="footer">
-                        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-                        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProject()"></button> 
-                </ng-template> -->
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProject()"></button>
+                </ng-template>
+
             </p-dialog>
        
 
 
-            <p-dialog [(visible)]="deleteprojectDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <p-dialog [(visible)]="deleteprojectDialogs" header="Confirm" [modal]="true" [style]="{width:'450px'}">
                 <div class="flex align-items-center justify-content-center">
                     <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
                     <span *ngIf="project">Are you sure you want to delete Projects <b>{{project.id}}</b>?</span>
                 </div>
                 <ng-template pTemplate="footer">
                     <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteprojectDialog = false"></button>
-                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)=" project.id !== undefined && confirmDeleteSelected()"></button>
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
                 </ng-template>
             </p-dialog>
     

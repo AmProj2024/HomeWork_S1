@@ -38,6 +38,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MaterialModule } from 'src/Material.Module';
 import { AllprojectReducer } from './demo/Store/Allproject.Reducer_';
 import { AllprojectEffects } from './demo/Store/Allproject.Effects';
+import { SharedProjecttypeService } from './demo/service/Shared.projecttype.Service';
+import { Router } from '@angular/router';
+import { SessionService } from './demo/service/session.service';
+import { SharedModule } from './shared/shared.module';
+import { LocalStorageService } from 'ngx-webstorage';
 //import { reducer } from './your-reducer-file';
 
 
@@ -62,24 +67,47 @@ import { AllprojectEffects } from './demo/Store/Allproject.Effects';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-         HttpClientModule,
-     BrowserAnimationsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
     // Injectable,
      //HttpClient,
      //Observable,
+     
      StoreDevtoolsModule,
      StoreModule.forRoot({ Allproject: AllprojectReducer, }),
   EffectsModule.forRoot([AllprojectEffects, /*AppEffects*/]),
+  
 
-    
   
   ],
   providers: [
     {   
       provide: LocationStrategy, useClass: HashLocationStrategy },
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService,AccountService,userservice,TransactionService,projecttypeService,AllprojectService,MatDialog
+        PhotoService, ProductService,AccountService,userservice,TransactionService,projecttypeService,
+        AllprojectService,MatDialog,SharedProjecttypeService,SessionService,SharedModule,LocalStorageService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  constructor(private router: Router,private Sessionservice:SessionService) {
+    
+
+
+    if (this.Sessionservice.getSessionData(SharedModule.CurrentUser.FullName as string))
+     {
+      // المستخدم مسجل الدخول، يمكن الاستمرار إلى الصفحة المطلوبة
+     // alert(this.Sessionservice.getSessionData(SharedModule.username));
+      this.router.navigate(['/']);
+      alert("session is found");
+     }
+ //    else 
+     {
+      // المستخدم غير مسجل الدخول، يتم توجيهه إلى صفحة تسجيل الدخول
+      this.router.navigate(['/auth/login']);
+      alert("session isn't found");
+
+    }
+  }
+
+}
