@@ -112,7 +112,7 @@ export class AppModule {
 
     if (this.Sessionservice.getSessionData(SharedModule.CurrentUser.FullName as string))
      {
-      return;
+      //return;
       // المستخدم مسجل الدخول، يمكن الاستمرار إلى الصفحة المطلوبة
       alert(this.Sessionservice.getSessionData(SharedModule.username));
      this.router.navigate(['/']);
@@ -121,10 +121,10 @@ export class AppModule {
  //    else 
      {
       // المستخدم غير مسجل الدخول، يتم توجيهه إلى صفحة تسجيل الدخول
-     // this.router.navigate(['/']);
+      this.router.navigate(['/']);
       
-      //this.router.navigate(['/auth/login']);
-      //alert("session isn't found");
+      this.router.navigate(['/auth/login']);
+      alert("session isn't found");
 
     }
   }

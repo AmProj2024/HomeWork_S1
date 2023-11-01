@@ -102,6 +102,7 @@ export class userservice {
 
   createUser(user: user): Observable<user> {
 
+    alert(user.FullName?.toString() );
     return this.http.post<user>(this.apiUrl, user);
 
 
@@ -110,7 +111,7 @@ export class userservice {
 
 
   updateUser(user: user): Observable<user> {
-    const url = `${this.apiUrl}/${user.Id}`;
+    const url = `${this.apiUrl}/${user.id}`;
     return this.http.put<user>(url, user);
   }
 

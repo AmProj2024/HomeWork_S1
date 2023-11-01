@@ -119,7 +119,7 @@ export class EmployeeComponent implements OnInit {
           Description: this.Employee.Description,
           IsEmployee: this.Employee.IsEmployee,
           BirthDate: this.Employee.BirthDate,
-          UserId: this.Employee.User?.Id,
+          UserId: this.Employee.User?.id,
           User : this.Employee.User,
 
         }

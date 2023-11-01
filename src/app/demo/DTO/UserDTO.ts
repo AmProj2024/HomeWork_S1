@@ -14,7 +14,7 @@ export class UserDTO {
 
     static fromUser(user: user) {
         const dto = new UserDTO();
-        dto.Id = user.Id;
+        dto.Id = user.id;
         dto.FullName = user.FullName;
         dto.Email1 = user.Email1;
         dto.password = user.password;
