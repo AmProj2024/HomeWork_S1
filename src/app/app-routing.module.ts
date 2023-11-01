@@ -28,6 +28,15 @@ const routes: Routes = [];
            { path: 'projecttype', loadChildren: () => import('./MyComponent/project-type/project-type-module').then(m => m.projecttypeModule) },
            { path: 'AllProjectlist', loadChildren: () => import('./MyComponent/AllProjectlist/Allprojectlist.module').then(m => m.AllProjectlistModule) },
            { path: 'projectlist', loadChildren: () => import('./MyComponent/projectlist/projectlist.module').then(m => m.ProjectlistModule) },
+           { path: 'NewCostCenter', loadChildren: () => import('./MyComponent/NewCostCenter/NewCostCenter.module') .then(m=>m.NewCostCenterModule) },
+           { path: 'AttempetedProject', loadChildren: () => import('./MyComponent/AttempetedProject/AttempetedProject.module') .then(m=>m.AttempetedProjectModule) },
+           { path: 'Employee', loadChildren: () => import('./MyComponent/Employee/Employee.module') .then(m=>m.EmployeeModule) },
+           { path: 'Activity', loadChildren: () => import('./MyComponent/Activity/Activity.module') .then(m=>m.ActivityModule) },
+           { path: 'ProjectActivity', loadChildren: () => import('./MyComponent/ProjectActivity/ProjectActivity.module') .then(m=>m.ProjectActivityModule) },
+           { path: 'Account', loadChildren: () => import('./MyComponent/Account/Account.module') .then(m=>m.AccountModule) },
+           { path: 'AccountMove', loadChildren: () => import('./MyComponent/AccountMove/AccountMove.module') .then(m=>m.AccountMoveModule) },
+           
+           
            
            
            { path: '**', redirectTo: '/notfound' },

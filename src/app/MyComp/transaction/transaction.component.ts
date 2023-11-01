@@ -43,7 +43,7 @@ export class TransactionComponent implements OnInit {
 
   ngOnInit() {
     this.Transactionservice.getAllTransactions().then(data => this.Transactions = data);
-    this.AccountService.getAccounts().then(data => this.BankAccount = data);
+    //this.AccountService.GetAll(data => this.BankAccount = data);
     //this.BankAccount.find(x=>x.id == 1 );
 
 

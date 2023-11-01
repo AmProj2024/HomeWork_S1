@@ -1,0 +1,202 @@
+
+
+
+
+<p>NameOfCompo works!</p>
+<p>Ameen</p>
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+                            (click)="FunctionAdd()"></button>
+                        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"
+                            (click)="deleteSelectedRow()"
+                            [disabled]="!deleteDialog || !selectedAttempetedProjects.length"></button>
+
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"
+                        (click)="dt.exportCSV()"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="AttempetedProjectlist" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['id','accountid','amount','transactiontype']" [(selection)]="selectedAttempetedProjects"  [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  selectionMode="multiple" [rowHover]="true" dataKey="id">
+      <!-- <p-table #dt [value]="Transactions" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['id','accountid','amount','transactiontype']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedTransaction" selectionMode="multiple" [rowHover]="true" dataKey="id"> -->
+
+                <!-- <p-table #dt [value]="AttempetedProjectlist" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,15]"> -->
+                <ng-template   pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">AttempetedProjects</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                 <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+
+                	<th pSortableColumn = Id>
+	Id<p-sortIcon field = Id>
+	</p-sortIcon>
+	</th>
+	<th pSortableColumn = Name>
+	Name<p-sortIcon field = Name>
+	</p-sortIcon>
+	</th>
+	<th pSortableColumn = Description>
+	Description<p-sortIcon field = Description>
+	</p-sortIcon>
+	</th>
+	<th pSortableColumn = IsEmployee>
+	IsEmployee<p-sortIcon field = IsEmployee>
+	</p-sortIcon>
+	</th>
+	<th pSortableColumn = BirthDate>
+	BirthDate<p-sortIcon field = BirthDate>
+	</p-sortIcon>
+	</th>
+	<th pSortableColumn = UserId>
+	UserId<p-sortIcon field = UserId>
+	</p-sortIcon>
+	</th>
+
+                       
+                        
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-Field>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="Field"></p-tableCheckbox>
+                        </td>
+                        <!-- <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>
+                            {{Allprojectlist.id}}
+                        </td> -->
+                                        <td style="width:14%; min-width:10rem;" >
+                        <span class="p-column-title" >Id</span>
+                        {{Field.Id }}
+                        </td>
+                 <td style="width:14%; min-width:10rem;" >
+                        <span class="p-column-title" >Name</span>
+                        {{Field.Name }}
+                        </td>
+                 <td style="width:14%; min-width:10rem;" >
+                        <span class="p-column-title" >Description</span>
+                        {{Field.Description }}
+                        </td>
+                 <td style="width:14%; min-width:10rem;" >
+                        <span class="p-column-title" >IsEmployee</span>
+                        {{Field.IsEmployee }}
+                        </td>
+                 <td style="width:14%; min-width:10rem;" >
+                        <span class="p-column-title" >BirthDate</span>
+                        {{Field.BirthDate }}
+                        </td>
+                 <td style="width:14%; min-width:10rem;" >
+                        <span class="p-column-title" >UserId</span>
+                        {{Field.UserId }}
+                        </td>
+
+                        <!-- 
+                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Allprojectlist</span>
+                            <span [class]="'Account-badge status-' + (Allprojectlist.transactiontype ? Transaction.transactiontype.toString().toLowerCase()  : '')">{{Transaction.transactiontype }}</span>
+
+                        </td> -->
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="FunctionEdit(Field)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteSelectedRow()"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+             <p-dialog [(visible)]="AttempetedProjectDialog" [style]="{width: '450px'}" header="NameOfCompo Details" [modal]="true" class="p-fluid">
+               
+
+                <ng-template pTemplate="content">
+
+                
+	                    <div class="field col">
+				<label for="Id">Id</label>
+				   <input type="text" pInputText id="id" [(ngModel)]="AttempetedProject.id" equired autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !AttempetedProject.id}"/>
+			</div>
+
+	                    <div class="field col">
+				<label for="Name">Name</label>
+				   <input type="text" pInputText id="Name" [(ngModel)]="AttempetedProject.Name" equired autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !AttempetedProject.Name}"/>
+			</div>
+
+	                    <div class="field col">
+				<label for="Description">Description</label>
+				   <input type="text" pInputText id="Description" [(ngModel)]="AttempetedProject.Description" equired autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !AttempetedProject.Description}"/>
+			</div>
+                             <p-checkbox  margin:25px [(ngModel)]="AttempetedProject.IsEmployee" [binary]="true" inputId="binary" >IsEmployee</p-checkbox>
+                            <label for="IsEmployee" style="margin:auto;">IsEmployee</label>
+	                    <div class="field col">
+				<label for="BirthDate">BirthDate</label>
+				   <input type="text" pInputText id="BirthDate" [(ngModel)]="AttempetedProject.BirthDate" equired autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !AttempetedProject.BirthDate}"/>
+			</div>
+			<div class="field">
+                        <label for="UserId">UserId</label>
+                        <!-- <textarea id=""UserId"" pInputTextarea [(ngModel)]=""AttempetedProject.UserId"" required rows="3" cols="20"></textarea> -->
+                        <p-dropdown [(ngModel)]="AttempetedProject.UserId" inputId="UserId"  optionValue="id" [options]="UsersDropDownList" placeholder="Select">
+                             <ng-template let-option pTemplate= "selectedItem" >
+                                <span >{{  option.name }}</span>
+                            </ng-template>
+                            <ng-template let-option pTemplate="item" >
+                                <span option.id >{{option.id+' '+option.name}}</span>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+
+                </ng-template>
+
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="Save()"></button>
+                </ng-template>
+
+            </p-dialog>
+       
+
+
+            <p-dialog [(visible)]="deleteDialogs" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                    <span *ngIf="AttempetedProject">Are you sure you want to delete AttempetedProjects <b>{{AttempetedProject.id}}</b>?</span>
+                </div>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteDialog = false"></button>
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+                </ng-template>
+            </p-dialog>
+    
+            <p-dialog [(visible)]="deleteDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                    <span>Are you sure you want to delete selected AttempetedProject?</span>
+                </div>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteDialog = false"></button>
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="AttempetedProject.id !== undefined && confirmDelete(AttempetedProject.id)"></button>
+                </ng-template>
+            </p-dialog>
+
+        </div>
+    </div>
+
+

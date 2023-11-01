@@ -239,8 +239,10 @@ export class AllProjectListComponent implements OnInit {
 
   async confirmDelete(code: number) {
     this.deleteprojectDialog = true;
+    alert(code);
     //this.Allprojectlist = this.Allprojectlist.filter(val => val.id !== this.project.id);
     //const cod = this.project.id;
+    //alert(code);
     await this.store.dispatch(deleteAllproject({ code }));
     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Transaction Deleted', life: 3000 });
 

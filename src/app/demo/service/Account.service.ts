@@ -1,32 +1,44 @@
-import { HttpClient } from '@angular/common/http';
+
+
 import { Injectable } from '@angular/core';
-import { account } from '../api/Account';
+import { Account } from '../api/Account.Model';
+
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class AccountService {
 
-    constructor(private http: HttpClient) { }
+  baseurl = 'http://localhost:3000/Account';
+  constructor(private http: HttpClient) {
 
-    // getProductsSmall() {
-    //     return this.http.get<any>('assets/demo/data/products-small.json')
-    //         .toPromise()
-    //         .then(res => res.data as Product[])
-    //         .then(data => data);
-    // }
+  }
 
-    getAccounts() {
-        return this.http.get<any>('assets/demo/data/Accounts.json')
-            .toPromise()
-            .then(res => res.data as  account[])
-            .then(data => data);
-    }
+  GetAll() {
+    return this.http.get<Account[]>(this.baseurl);
+  }
 
-    // getProductsMixed() {
-    //     return this.http.get<any>('assets/demo/data/products-mixed.json')
-    //         .toPromise()
-    //         .then(res => res.data as Product[])
-    //         .then(data => data);
-    // }
+  Accountprojects(): Observable<any> {
+    return this.http.get(this.baseurl);
+  }
+
+  Getbycode(code: number) {
+    return this.http.get<Account>(this.baseurl + '/' + code);
+  }
+  Delete(code: number) {
+    return this.http.delete(this.baseurl + '/' + code);
+  }
 
 
+   DeleteList(codes:number[]) {
+    return this.http.delete(this.baseurl + '/' + codes);
+  }
+
+  Update(data: Account) {
+    return this.http.put(this.baseurl + '/' + data.id, data);
+  }
+  Create(data: Account) {
+    return this.http.post(this.baseurl, data);
+  }
 }
+

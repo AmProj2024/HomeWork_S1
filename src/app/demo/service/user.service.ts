@@ -110,7 +110,7 @@ export class userservice {
 
 
   updateUser(user: user): Observable<user> {
-    const url = `${this.apiUrl}/${user.id}`;
+    const url = `${this.apiUrl}/${user.Id}`;
     return this.http.put<user>(url, user);
   }
 

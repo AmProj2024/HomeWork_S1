@@ -1,0 +1,14 @@
+{
+	"Employee": [
+            {
+                "Id": 68780,
+                "Name": "a",
+                "Description": "dd",
+                "IsEmployee": true,
+                "BirthDate": "2022",
+                "UserId": "1"
+              }
+
+    ]
+    
+}

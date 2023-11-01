@@ -1,0 +1,258 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<p>NameOfCompo works!</p>
+<p>Ameen</p>
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+                            (click)="FunctionAdd()"></button>
+                        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"
+                            (click)="deleteSelectedRows()"
+                            [disabled]="!selectedAccountMove || !selectedAccountMoves.length"></button>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import"
+                        chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"
+                        (click)="dt.exportCSV()"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <!--******************DATA GRID************************-->
+            <p-table #dt [value]="AccountMovelist" [columns]="cols" responsiveLayout="scroll" [rows]="10"
+                [globalFilterFields]="['id','Name','Description','IsAccountMove','BirthDate','UserId']"
+                [(selection)]="selectedAccountMoves" [paginator]="true" [rowsPerPageOptions]="[10,20,30]"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" selectionMode="multiple"
+                [rowHover]="true" dataKey="id">
+
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">AccountMoves</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."
+                                class="w-full sm:w-auto" />
+
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th style=min-width:15rem>
+                            <div class=flex align-items-center>Id<p-columnFilter type="text" field="id"
+                                    display=menu></p-columnFilter></div>
+                        </th>
+                        <th style=min-width:15rem>
+                            <div class=flex align-items-center>AccountId<p-columnFilter type="text" field="AccountId"
+                                    display=menu></p-columnFilter></div>
+                        </th>
+                        <th style=min-width:15rem>
+                            <div class=flex align-items-center>AccountName<p-columnFilter type="text" field="AccountName"
+                                    display=menu></p-columnFilter></div>
+                        </th>
+                        <th style=min-width:15rem>
+                            <div class=flex align-items-center>Debit<p-columnFilter type="text" field="Debit"
+                                    display=menu></p-columnFilter></div>
+                        </th>
+                        <th style=min-width:15rem>
+                            <div class=flex align-items-center>Credit<p-columnFilter type="text" field="Credit"
+                                    display=menu></p-columnFilter></div>
+                        </th>
+                        <th style=min-width:15rem>
+                            <div class=flex align-items-center>Amount<p-columnFilter type="text" field="Amount"
+                                    display=menu></p-columnFilter></div>
+                        </th>
+                        <th style=min-width:15rem>
+                            <div class=flex align-items-center>Date<p-columnFilter type="date" field="Date"
+                                    display=menu></p-columnFilter></div>
+                        </th>
+                        <th style=min-width:15rem>
+                            <div class=flex align-items-center>TotalCredit<p-columnFilter type="text"
+                                    field="TotalCredit" display=menu></p-columnFilter></div>
+                        </th>
+                        <th style=min-width:15rem>
+                            <div class=flex align-items-center>TotalDebit<p-columnFilter type="text"
+                                    field="TotalDebit" display=menu></p-columnFilter></div>
+                        </th>
+
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-Field>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="Field">
+                            </p-tableCheckbox>
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Id</span>
+                            {{Field.id }}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">AccountId</span>
+                            {{Field.AccountId | number }}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">AccountName</span>
+                            {{Field.AccountName }}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Debit</span>
+                            {{Field.Debit | number }}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Credit</span>
+                            {{Field.Credit | number }}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Amount</span>
+                            {{Field.Amount | number }}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Date</span>
+                            {{Field.Date | date }}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">TotalCredit</span>
+                            {{Field.TotalCredit | number }}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">TotalDebit</span>
+                            {{Field.TotalDebit | number }}
+                        </td>
+
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-success mr-2"
+                                    (click)="FunctionEdit(Field)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                                    (click)="deleteSelectedRow(Field)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <!--******************DATA GRID************************-->
+
+
+
+            <!--******************ADD AND EDITE DIALOG************************-->
+            <p-dialog [(visible)]="AccountMoveDialog" [style]="{width: '450px'}" header="NameOfCompo Details"
+                [modal]="true" class="p-fluid">
+                <ng-template pTemplate="content">
+
+                    <div class="field col">
+                        <label for="id">id</label>
+                        <input type="number" pInputText id="id" [(ngModel)]="AccountMove.id" equired autofocus disabled
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !AccountMove.id}" />
+                    </div>
+                    <div class="field">
+                        <label for="AccountId">AccountId</label>
+                        <!-- <textarea id=""AccountId"" pInputTextarea [(ngModel)]=""AccountMove.AccountId"" required rows="3" cols="20"></textarea> -->
+                        <p-dropdown [(ngModel)]="AccountMove.AccountId" inputId="AccountId" optionValue="id"
+                            [options]="AccountsDropDownList" placeholder="Select">
+                            <ng-template let-option pTemplate="selectedItem">
+                                <span>{{ option.Name }}</span>
+                            </ng-template>
+                            <ng-template let-option pTemplate="item">
+                                <span option.id>{{option.Id+' '+option.Name}}</span>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+                    <div class="field col">
+                        <label for="AccountName">AccountName</label>
+                        <input type="text" pInputText id="AccountName" [(ngModel)]="AccountMove.AccountName" equired
+                            autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !AccountMove.AccountName}" />
+                    </div>
+
+                    <div class="field col">
+                        <label for="Debit">Debit</label>
+                        <input type="number" pInputText id="Debit" [(ngModel)]="AccountMove.Debit" equired autofocus
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !AccountMove.Debit}" />
+                    </div>
+
+                    <div class="field col">
+                        <label for="Credit">Credit</label>
+                        <input type="number" pInputText id="Credit" [(ngModel)]="AccountMove.Credit" equired autofocus
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !AccountMove.Credit}" />
+                    </div>
+
+                    <div class="field col">
+                        <label for="Amount">Amount</label>
+                        <input type="number" pInputText id="Amount" [(ngModel)]="AccountMove.Amount" equired autofocus
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !AccountMove.Amount}" />
+                    </div>
+
+                    <div class="field col">
+                        <label for="Date">Date</label>
+                        <input type="date" pInputText id="Date" [(ngModel)]="AccountMove.Date" equired autofocus
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !AccountMove.Date}" />
+                    </div>
+
+                    <div class="field col">
+                        <label for="TotalCredit">TotalCredit</label>
+                        <input type="number" pInputText id="TotalCredit" [(ngModel)]="AccountMove.TotalCredit" equired
+                            autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !AccountMove.TotalCredit}" />
+                    </div>
+
+                    <div class="field col">
+                        <label for="TotalDebit">TotalDebit</label>
+                        <input type="number" pInputText id="TotalDebit" [(ngModel)]="AccountMove.TotalDebit" equired
+                            autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !AccountMove.TotalDebit}" />
+                    </div>
+
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                        (click)="hideDialog()"></button>
+                    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+                        (click)="Save()"></button>
+                </ng-template>
+
+            </p-dialog>
+            <!--******************ADD AND EDITE DIALOG************************-->
+
+
+
+            <!--*******************BUTTONS CONFIRM DIALOGS***********************-->
+            <p-dialog [(visible)]="deleteDialogs" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                    <span *ngIf="AccountMove">Are you sure you want to There AccountMoves
+                        <b>{{AccountMove.id}}</b>?</span>
+                </div>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                        (click)="deleteDialogs = false"></button>
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                        (click)="confirmDeleteSelected()"></button>
+                </ng-template>
+            </p-dialog>
+
+            <p-dialog [(visible)]="deleteDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                    <span>Are you sure you want to delete this AccountMove?</span>
+                </div>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                        (click)="deleteDialog = false"></button>
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                        (click)="confirmDelete()"></button>
+                </ng-template>
+            </p-dialog>
+            <!--*******************BUTTONS CONFIRM DIALOGS***********************-->
+
+        </div>
+    </div>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

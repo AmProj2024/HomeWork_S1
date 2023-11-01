@@ -33,7 +33,7 @@ export class BankAccountComponent implements OnInit {
   constructor(private Accountservice: AccountService, private messageService: MessageService) { }
 
   ngOnInit() {
-      this.Accountservice.getAccounts().then(data => this.accounts = data);
+      //this.Accountservice.getAccounts().then(data => this.accounts = data);
 
       this.cols = [
           { field: 'id', header: 'id' },

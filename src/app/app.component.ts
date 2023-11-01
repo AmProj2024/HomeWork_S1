@@ -17,7 +17,7 @@ export class AppComponent {
 
     //  this.storage.store('username', SharedModule.CurrentUser.FullName as string);
       //alert(this.storage.getStrategyName().toString());
-      alert(this.storage.getStrategyName()+'222222');
+    ///  alert(this.storage.getStrategyName()+'222222');
 
   }
 }

@@ -1,0 +1,206 @@
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<p>NameOfCompo works!</p>
+<p>Ameen</p>
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+                            (click)="FunctionAdd()"></button>
+                        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger"
+                            (click)="deleteSelectedRows()"
+                            [disabled]="!selectedProjectActivity || !selectedProjectActivitys.length"></button>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import"
+                        chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"
+                        (click)="dt.exportCSV()"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <!--******************DATA GRID************************-->
+            <p-table #dt [value]="ProjectActivitylist" [columns]="cols" responsiveLayout="scroll" [rows]="10"
+                [globalFilterFields]="['id','Name','Description','IsProjectActivity','BirthDate','UserId']" [(selection)]="selectedProjectActivitys"
+                [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" selectionMode="multiple"
+                [rowHover]="true" dataKey="id">
+
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">ProjectActivitys</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                         	<th pSortableColumn = Id>
+	Id<p-sortIcon field = Id>
+	</p-sortIcon>
+	</th>
+	<th pSortableColumn = Name>
+	Name<p-sortIcon field = Name>
+	</p-sortIcon>
+	</th>
+	<th pSortableColumn = ActivityId>
+	ActivityId<p-sortIcon field = ActivityId>
+	</p-sortIcon>
+	</th>
+	<th pSortableColumn = Description>
+	Description<p-sortIcon field = Description>
+	</p-sortIcon>
+	</th>
+	<th pSortableColumn = Date>
+	Date<p-sortIcon field = Date>
+	</p-sortIcon>
+	</th>
+	<th pSortableColumn = IsActive>
+	IsActive<p-sortIcon field = IsActive>
+	</p-sortIcon>
+	</th>
+
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-Field>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="Field">
+                            </p-tableCheckbox>
+                        </td>
+                                         <td style="width:14%; min-width:10rem;" >
+                        <span class="p-column-title" >Id</span>
+                        {{Field.id }}
+                        </td>
+                 <td style="width:14%; min-width:10rem;" >
+                        <span class="p-column-title" >Name</span>
+                        {{Field.Name }}
+                        </td>
+                 <td style="width:14%; min-width:10rem;" >
+                        <span class="p-column-title" >ActivityId</span>
+                        {{Field.ActivityId }}
+                        </td>
+                 <td style="width:14%; min-width:10rem;" >
+                        <span class="p-column-title" >Description</span>
+                        {{Field.Description }}
+                        </td>
+                 <td style="width:14%; min-width:10rem;" >
+                        <span class="p-column-title" >Date</span>
+                        {{Field.Date }}
+                        </td>
+                 <td style="width:14%; min-width:10rem;" >
+                        <span class="p-column-title" >IsActive</span>
+                        {{Field.IsActive }}
+                        </td>
+
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-success mr-2"
+                                    (click)="FunctionEdit(Field)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                                    (click)="deleteSelectedRow(Field)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <!--******************DATA GRID************************-->
+
+
+
+            <!--******************ADD AND EDITE DIALOG************************-->
+            <p-dialog [(visible)]="ProjectActivityDialog" [style]="{width: '450px'}" header="NameOfCompo Details"
+                [modal]="true" class="p-fluid">
+                <ng-template pTemplate="content">
+                  
+	                    <div class="field col">
+				<label for="Id">Id</label>
+				   <input type="text" pInputText id="id" [(ngModel)]="ProjectActivity.id" equired autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !ProjectActivity.id}"/>
+			</div>
+
+	                    <div class="field col">
+				<label for="Name">Name</label>
+				   <input type="text" pInputText id="Name" [(ngModel)]="ProjectActivity.Name" equired autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !ProjectActivity.Name}"/>
+			</div>
+			<div class="field">
+                        <label for="ActivityId">ActivityId</label>
+                        <!-- <textarea id=""ActivityId"" pInputTextarea [(ngModel)]=""ProjectActivity.ActivityId"" required rows="3" cols="20"></textarea> -->
+                        <p-dropdown [(ngModel)]="ProjectActivity.ActivityId" inputId="ActivityId"  optionValue="id" [options]="ActivitysDropDownList" placeholder="Select">
+                             <ng-template let-option pTemplate= "selectedItem" >
+                                <span >{{  option.name }}</span>
+                            </ng-template>
+                            <ng-template let-option pTemplate="item" >
+                                <span option.id >{{option.id+' '+option.Name}}</span>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+	                    <div class="field col">
+				<label for="Description">Description</label>
+				   <input type="text" pInputText id="Description" [(ngModel)]="ProjectActivity.Description" equired autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !ProjectActivity.Description}"/>
+			</div>
+
+	                    <div class="field col">
+				<label for="Date">Date</label>
+				   <input type="text" pInputText id="Date" [(ngModel)]="ProjectActivity.Date" equired autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !ProjectActivity.Date}"/>
+			</div>
+                             <p-checkbox  margin:25px [(ngModel)]="ProjectActivity.IsActive" [binary]="true" inputId="binary" >IsActive</p-checkbox>
+                            <label for="IsActive" style="margin:auto;">IsActive</label>
+                    </ng-template>
+                     <ng-template pTemplate="footer">
+                    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text"
+                        (click)="hideDialog()"></button>
+                    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+                        (click)="Save()"></button>
+                </ng-template>
+
+            </p-dialog>
+            <!--******************ADD AND EDITE DIALOG************************-->
+
+
+
+            <!--*******************BUTTONS CONFIRM DIALOGS***********************-->
+            <p-dialog [(visible)]="deleteDialogs" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                    <span *ngIf="ProjectActivity">Are you sure you want to There ProjectActivitys <b>{{ProjectActivity.id}}</b>?</span>
+                </div>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                        (click)="deleteDialogs = false"></button>
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                        (click)="confirmDeleteSelected()"></button>
+                </ng-template>
+            </p-dialog>
+
+            <p-dialog [(visible)]="deleteDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                    <span>Are you sure you want to delete this ProjectActivity?</span>
+                </div>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                        (click)="deleteDialog = false"></button>
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                        (click)="confirmDelete()"></button>
+                </ng-template>
+            </p-dialog>
+            <!--*******************BUTTONS CONFIRM DIALOGS***********************-->
+
+        </div>
+    </div>
+
+
+

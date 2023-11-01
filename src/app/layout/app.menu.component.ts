@@ -96,6 +96,58 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-lock',
                         routerLink: ['./projectlist']
                     },
+                    {
+                        label: 'NewCostCenter',
+                        icon: 'pi pi-fw pi-lock',
+                        routerLink: ['./NewCostCenter']
+                    },
+
+                    {
+                        label: 'AttempetedProject',
+                        icon: 'pi pi-fw pi-lock',
+                        routerLink: ['./AttempetedProject']
+                    },
+                    {
+                        label: 'Employee',
+                        icon: 'pi pi-fw pi-lock',
+                        routerLink: ['./Employee']
+                    },
+                    {
+                        label: 'Activity',
+                        icon: 'pi pi-fw pi-lock',
+                        routerLink: ['./Activity']
+                    },
+
+
+                    {
+                        label: 'ProjectActivity',
+                        icon: 'pi pi-fw pi-lock',
+                        routerLink: ['./ProjectActivity']
+                    },
+                    {
+                        label: 'Account',
+                        icon: 'pi pi-fw pi-lock',
+                        routerLink: ['./Account']
+                    },
+                    {
+                        label: 'AccountMove',
+                        icon: 'pi pi-fw pi-lock',
+                        routerLink: ['./AccountMove']
+                    },
+
+
+                    
+
+                    
+
+                    
+
+
+
+                    
+
+
+                    
 
 
 

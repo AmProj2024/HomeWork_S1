@@ -114,22 +114,11 @@
   ],
   "Allproject": [
     {
-      "id": 22547,
-      "name": "Ameen",
-      "Title": "Ameen",
-      "Description": "Ameen",
-      "projecttypeId": 10,
-      "StartAt": "Ameen",
-      "EndAt": "Ameen",
-      "cost": "1000"
-    },
-    {
       "id": 78971,
-      "name": "Ameen yahya Ali Ismail",
+      "name": "Ameen yahya Ali ",
       "Title": "Ameen yahya Ali Ismail",
       "Description": "Ameen yahya Ali Ismail",
       "projecttypeId": 10,
-      "projecttypeName": "",
       "StartAt": "Ameen yahya Ali Ismail",
       "EndAt": "Ameen yahya Ali Ismail",
       "cost": "32000"
@@ -186,6 +175,164 @@
       "StartAt": "MEEN",
       "EndAt": "MEEN",
       "cost": "4"
+    },
+    {
+      "id": 66579,
+      "name": "555",
+      "Title": "kkk",
+      "Description": "kkk",
+      "projecttypeId": 11,
+      "StartAt": "222",
+      "EndAt": "111",
+      "cost": "111"
+    }
+  ],
+  "AttempetedProject": [
+    {}
+  ],
+  "Employee": [
+    {
+      "id": 88,
+      "Name": "Ameen YAHYA ALI",
+      "Description": "Ameen",
+      "IsEmployee": "",
+      "BirthDate": "2022",
+      "UserId": "ByHcY-7"
+    },
+    {
+      "id": 20930,
+      "Name": "kkkk",
+      "Description": "kkkk",
+      "IsEmployee": true,
+      "BirthDate": "2022",
+      "UserId": "ByHcY-7"
+    },
+    {
+      "id": 20930,
+      "Name": "kkkk",
+      "Description": "kkkk",
+      "IsEmployee": true,
+      "BirthDate": "2022",
+      "UserId": "ByHcY-7"
+    },
+    {
+      "id": 11512,
+      "Name": "Ar",
+      "Description": "Ar",
+      "IsEmployee": true,
+      "BirthDate": "2022-03-01",
+      "UserId": "1"
+    },
+    {
+      "id": 11512,
+      "Name": "Ar",
+      "Description": "Ar",
+      "IsEmployee": true,
+      "BirthDate": "2022-03-01",
+      "UserId": "1"
+    },
+    {
+      "id": 80982,
+      "Name": "bbb",
+      "Description": "bb",
+      "BirthDate": "2023",
+      "UserId": "ByHcY-7"
+    },
+    {
+      "id": 80982,
+      "Name": "bbb",
+      "Description": "bb",
+      "BirthDate": "2023",
+      "UserId": "ByHcY-7"
+    },
+    {
+      "id": 32608,
+      "Name": "ppp",
+      "Description": "ppp",
+      "IsEmployee": true,
+      "BirthDate": "22",
+      "UserId": "ByHcY-7"
+    },
+    {
+      "id": 71921,
+      "Name": "ooo",
+      "Description": "5jjj",
+      "IsEmployee": true,
+      "BirthDate": "33",
+      "UserId": "ByHcY-7"
+    },
+    {
+      "id": 71921,
+      "Name": "ooo",
+      "Description": "5jjj",
+      "IsEmployee": true,
+      "BirthDate": "33",
+      "UserId": "ByHcY-7"
+    }
+  ],
+  "Activity": [
+    {},
+    {
+      "id": 92475,
+      "Name": "llll",
+      "DateActivity": "2023",
+      "Active": true
+    },
+    {
+      "id": 63009,
+      "Name": "kkkk",
+      "DateActivity": "kkkk",
+      "Active": true,
+      "EmployeeId": 88
+    }
+  ],
+  "ProjectActivity": [
+    {},
+    {
+      "id": 43271,
+      "Name": "llll",
+      "Description": ";oooo",
+      "ActivityId": 92475,
+      "Date": "2022",
+      "IsActive": true
+    }
+  ],
+  "Account": [
+    {
+      "id": 29827,
+      "Name": "dsjfdlksf"
+    }
+  ],
+  "AccountMove": [
+    {
+      "id": 49549,
+      "AccountName": "AccountName",
+      "AccountId": 69968,
+      "Debit": "1000",
+      "Credit": "1000",
+      "TotalCredit": "1",
+      "TotalDebit": "1",
+      "Date": "2022-02-02"
+    },
+    {
+      "id": 66401,
+      "AccountId": 29827,
+      "Debit": "5634564",
+      "Credit": "53645646",
+      "TotalCredit": "865456",
+      "TotalDebit": "3455645634635",
+      "Date": "2023-10-31",
+      "Amount": "5435634634"
+    },
+    {
+      "id": 52405,
+      "AccountId": 29827,
+      "Debit": 1,
+      "Credit": 1,
+      "TotalCredit": 1,
+      "TotalDebit": 1,
+      "Date": "2023-10-31",
+      "Amount": 1
     }
   ]
 }
